@@ -7,7 +7,7 @@ Summary:	Parallel netCDF (PnetCDF) library
 Summary(pl.UTF-8):	Biblioteka zrównoleglona netCDF (PnetCDF)
 Name:		parallel-netcdf
 Version:	1.9.0
-Release:	1
+Release:	2
 License:	BSD-like
 Group:		Libraries
 #Source0Download: http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html
