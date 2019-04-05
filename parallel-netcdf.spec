@@ -6,13 +6,13 @@
 Summary:	Parallel netCDF (PnetCDF) library
 Summary(pl.UTF-8):	Biblioteka zrównoleglona netCDF (PnetCDF)
 Name:		parallel-netcdf
-Version:	1.9.0
-Release:	2
+Version:	1.11.0
+Release:	1
 License:	BSD-like
 Group:		Libraries
 #Source0Download: http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html
-Source0:	http://cucis.ece.northwestern.edu/projects/PnetCDF/Release/%{name}-%{version}.tar.gz
-# Source0-md5:	f8d5627cb297263c1459d67254dc5fab
+Source0:	http://cucis.ece.northwestern.edu/projects/PnetCDF/Release/pnetcdf-%{version}.tar.gz
+# Source0-md5:	59e950092b7c5a3b926fe63fabe92db0
 Patch0:		%{name}-sh.patch
 URL:		https://trac.mcs.anl.gov/projects/parallel-netcdf
 BuildRequires:	autoconf >= 2.69
@@ -88,7 +88,7 @@ API documentation for PnetCDF library.
 Dokumentacja API biblioteki PnetCDF.
 
 %prep
-%setup -q
+%setup -q -n pnetcdf-%{version}
 %patch0 -p1
 
 %build
@@ -128,7 +128,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ncvalidator
 %attr(755,root,root) %{_bindir}/pnetcdf_version
 %attr(755,root,root) %{_libdir}/libpnetcdf.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpnetcdf.so.1
+%attr(755,root,root) %ghost %{_libdir}/libpnetcdf.so.3
 %{_mandir}/man1/ncmpidiff.1*
 %{_mandir}/man1/ncmpidump.1*
 %{_mandir}/man1/ncmpigen.1*
