@@ -1,6 +1,6 @@
---- pnetcdf-1.11.0/acinclude.m4.orig	2018-12-04 20:00:32.000000000 +0100
-+++ pnetcdf-1.11.0/acinclude.m4	2019-04-05 17:40:21.300100012 +0200
-@@ -1105,7 +1105,7 @@
+--- pnetcdf-1.12.0/acinclude.m4.orig	2019-09-29 20:31:48.000000000 +0200
++++ pnetcdf-1.12.0/acinclude.m4	2019-12-08 14:24:10.766689962 +0100
+@@ -1108,7 +1108,7 @@
          end module conftest
      ])]
  )
@@ -9,242 +9,21 @@
  dnl AC_TRY_EVAL(ac_try)
  if test -f conftest.${FC_MODEXT} ; then
     ac_cv_prog_f90_uppercase_mod=no
-@@ -1580,7 +1580,7 @@
- AC_DEFUN([UD_CHECK_XLC],[
-     AC_CACHE_CHECK([if C compiler is IBM XLC], [ac_cv_cc_compiler_xlc],
-     [ac_cv_cc_compiler_xlc=no
--     ac_XLC_VER=`$MPICC -qversion >& conftest.ver`
-+     ac_XLC_VER=`$MPICC -qversion >conftest.ver 2>&1`
-      ac_XLC_VENDOR=`head -c 6 conftest.ver`
-      if test "x${ac_XLC_VENDOR}" = "xIBM XL" ; then
-         ac_cv_cc_compiler_xlc=yes
-@@ -1633,7 +1633,7 @@
- AC_DEFUN([UD_CHECK_PGF77],[
-     AC_CACHE_CHECK([if Fortran 77 compiler is pgf77], [ac_cv_fc_compiler_pgf77],
-     [ac_cv_fc_compiler_pgf77=no
+@@ -1652,7 +1652,7 @@
+ AC_DEFUN([UD_CHECK_MPICC_IS_XLC],[
+     AC_CACHE_CHECK([if MPI C compiler is IBM XLC], [ac_cv_mpicc_is_XLC],
+     [ac_cv_mpicc_is_XLC=no
+-     ac_MPICC_VER=`$MPICC -qversion >& conftest.ver`
++     ac_MPICC_VER=`$MPICC -qversion >conftest.ver 2>&1`
+      ac_MPICC_VENDOR=`head -c 6 conftest.ver`
+      if test "x${ac_MPICC_VENDOR}" = "xIBM XL" ; then
+         ac_cv_mpicc_is_XLC=yes
+@@ -1799,7 +1799,7 @@
+ AC_DEFUN([UD_CHECK_MPIF77_IS_PGF77],[
+     AC_CACHE_CHECK([if MPI Fortran 77 compiler is PGI pgf77], [ac_cv_mpif77_is_PGF77],
+     [ac_cv_mpif77_is_PGF77=no
 -     eval $MPIF77 -V </dev/null >& conftest.ver
 +     eval $MPIF77 -V </dev/null >conftest.ver 2>&1
-      ac_F77_VENDOR=`head -c 5 conftest.ver`
-      if test "x${ac_F77_VENDOR}" = xpgf77 ; then
-         ac_cv_fc_compiler_pgf77=yes
---- pnetcdf-1.11.0/configure.ac.orig	2018-12-17 00:49:20.000000000 +0100
-+++ pnetcdf-1.11.0/configure.ac	2019-04-05 17:45:03.191906207 +0200
-@@ -196,46 +196,46 @@
- CANDIDATE_MPIF90="${MPIF90} mpif90 mpif90_r mpf90 mpf90_r mpif95 mpif95_r mpf95 mpf95_r"
- 
- dnl add GNU MPI compilers
--CANDIDATE_MPICC+=" mpigcc mpgcc mpigcc_r mpgcc_r"
--CANDIDATE_MPICXX+=" mpig++ mpg++ mpig++_r mpg++_r"
--CANDIDATE_MPIF77+=" mpig77 mpig77_r mpg77 mpg77_r"
--CANDIDATE_MPIF90+=" mpigfortran mpgfortran mpigfortran_r mpgfortran_r"
-+CANDIDATE_MPICC="$CANDIDATE_MPICC mpigcc mpgcc mpigcc_r mpgcc_r"
-+CANDIDATE_MPICXX="$CANDIDATE_MPICXX mpig++ mpg++ mpig++_r mpg++_r"
-+CANDIDATE_MPIF77="$CANDIDATE_MPIF77 mpig77 mpig77_r mpg77 mpg77_r"
-+CANDIDATE_MPIF90="$CANDIDATE_MPIF90 mpigfortran mpgfortran mpigfortran_r mpgfortran_r"
- 
- dnl add IBM MPI compilers
--CANDIDATE_MPICC+=" mpcc_r mpcc mpixlc_r mpixlc"
--CANDIDATE_MPICXX+=" mpCC_r mpCC mpixlcxx_r mpixlcxx mpixlC_r mpixlC"
--CANDIDATE_MPIF77+=" mpixlf77_r mpixlf77"
--CANDIDATE_MPIF90+=" mpixlf90_r mpixlf90"
-+CANDIDATE_MPICC="$CANDIDATE_MPICC mpcc_r mpcc mpixlc_r mpixlc"
-+CANDIDATE_MPICXX="$CANDIDATE_MPICXX mpCC_r mpCC mpixlcxx_r mpixlcxx mpixlC_r mpixlC"
-+CANDIDATE_MPIF77="$CANDIDATE_MPIF77 mpixlf77_r mpixlf77"
-+CANDIDATE_MPIF90="$CANDIDATE_MPIF90 mpixlf90_r mpixlf90"
- 
- dnl add IBM BGL MPI compilers
--CANDIDATE_MPICC+=" blrts_xlc mpxlc_r mpxlc"
--CANDIDATE_MPICXX+=" blrts_xlC mpxlC_r mpxlC mpixlc++ mpxlcxx mpxlc++ mpxlCC mpixlc++_r mpxlcxx_r mpxlc++_r mpxlCC_r"
--CANDIDATE_MPIF77+=" blrts_xlf mpxlf_r mpxlf mpxlf77 mpxlf77_r mpixlf mpixlf_r"
--CANDIDATE_MPIF90+=" blrts_xlf90 mpxlf90_r mpxlf90 mpxlf95_r mpxlf95 mpixlf95 mpixlf95_r"
-+CANDIDATE_MPICC="$CANDIDATE_MPICC blrts_xlc mpxlc_r mpxlc"
-+CANDIDATE_MPICXX="$CANDIDATE_MPICXX blrts_xlC mpxlC_r mpxlC mpixlc++ mpxlcxx mpxlc++ mpxlCC mpixlc++_r mpxlcxx_r mpxlc++_r mpxlCC_r"
-+CANDIDATE_MPIF77="$CANDIDATE_MPIF77 blrts_xlf mpxlf_r mpxlf mpxlf77 mpxlf77_r mpixlf mpixlf_r"
-+CANDIDATE_MPIF90="$CANDIDATE_MPIF90 blrts_xlf90 mpxlf90_r mpxlf90 mpxlf95_r mpxlf95 mpixlf95 mpixlf95_r"
- 
- dnl add Fujitsu MPI compilers
--CANDIDATE_MPICC+=" mpifccpx"
--CANDIDATE_MPICXX+=" mpiFCCpx"
--CANDIDATE_MPIF77+=" mpifrtpx"
--CANDIDATE_MPIF90+=" mpifrtpx"
-+CANDIDATE_MPICC="$CANDIDATE_MPICC mpifccpx"
-+CANDIDATE_MPICXX="$CANDIDATE_MPICXX mpiFCCpx"
-+CANDIDATE_MPIF77="$CANDIDATE_MPIF77 mpifrtpx"
-+CANDIDATE_MPIF90="$CANDIDATE_MPIF90 mpifrtpx"
- 
- dnl add Cray MPI compiler wrappers
--CANDIDATE_MPICC+=" cc"
--CANDIDATE_MPICXX+=" CC"
--CANDIDATE_MPIF77+=" ftn"
--CANDIDATE_MPIF90+=" ftn"
-+CANDIDATE_MPICC="$CANDIDATE_MPICC cc"
-+CANDIDATE_MPICXX="$CANDIDATE_MPICXX CC"
-+CANDIDATE_MPIF77="$CANDIDATE_MPIF77 ftn"
-+CANDIDATE_MPIF90="$CANDIDATE_MPIF90 ftn"
- 
- dnl add Intel MPI compiler wrappers
--CANDIDATE_MPICC+=" mpiicc icc"
--CANDIDATE_MPICXX+=" mpiicpc mpiicxx mpiic++ mpiiCC icpc"
--CANDIDATE_MPIF77+=" mpiifort mpiifc mpiif77 ifort"
--CANDIDATE_MPIF90+=" mpiifort mpiifc mpiif95 mpiif90 ifort"
-+CANDIDATE_MPICC="$CANDIDATE_MPICC mpiicc icc"
-+CANDIDATE_MPICXX="$CANDIDATE_MPICXX mpiicpc mpiicxx mpiic++ mpiiCC icpc"
-+CANDIDATE_MPIF77="$CANDIDATE_MPIF77 mpiifort mpiifc mpiif77 ifort"
-+CANDIDATE_MPIF90="$CANDIDATE_MPIF90 mpiifort mpiifc mpiif95 mpiif90 ifort"
- 
- dnl add PGI MPI compiler wrappers
--CANDIDATE_MPICC+=" mpipgcc mppgcc"
--CANDIDATE_MPICXX+=" mpipgCC mppgCC"
--CANDIDATE_MPIF77+=" mpipgf77 mppgf77"
--CANDIDATE_MPIF90+=" mpipgf90 mpipgf95 mppgf90 mppgf95 "
-+CANDIDATE_MPICC="$CANDIDATE_MPICC mpipgcc mppgcc"
-+CANDIDATE_MPICXX="$CANDIDATE_MPICXX mpipgCC mppgCC"
-+CANDIDATE_MPIF77="$CANDIDATE_MPIF77 mpipgf77 mppgf77"
-+CANDIDATE_MPIF90="$CANDIDATE_MPIF90 mpipgf90 mpipgf95 mppgf90 mppgf95 "
- 
- dnl find the full path of MPICC from CANDIDATE_MPICC and MPI_INSTALL
- if test "x${ac_user_MPICC}" = x ; then
-@@ -254,7 +254,7 @@
-       ERR_MSG="Specified MPI C compiler \"$ac_user_MPICC\" cannot be found"
-    fi
-    if test "x$MPI_INSTALL" != x ; then
--      ERR_MSG+=" under $MPI_INSTALL"
-+      ERR_MSG="$ERR_MSG under $MPI_INSTALL"
-    fi
-    AC_MSG_ERROR([
-    -----------------------------------------------------------------------
-@@ -369,7 +369,7 @@
-          ERR_MSG="Specified MPI C++ compiler \"$ac_user_MPICXX\" cannot be found"
-       fi
-       if test "x$MPI_INSTALL" != x ; then
--         ERR_MSG+=" under $MPI_INSTALL"
-+         ERR_MSG="$ERR_MSG under $MPI_INSTALL"
-       fi
-       if test "x${enable_cxx}" = xyes ; then
-          dnl --enable-cxx is explicitly set at command line
-@@ -459,7 +459,7 @@
- 
- if test "x${enable_strict}" = xyes; then
-    if test "x${GCC}" = xyes; then
--      CFLAGS+=" -Wall -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wpointer-arith -Wbad-function-cast"
-+      CFLAGS="$CFLAGS -Wall -Wstrict-prototypes -Wmissing-prototypes -Wundef -Wpointer-arith -Wbad-function-cast"
-    else
-       AC_MSG_WARN([--enable-strict is for GNU compiler only])
-       enable_strict=no
-@@ -494,7 +494,7 @@
-          ERR_MSG="Specified MPI Fortran 77 compiler \"$ac_user_MPIF77\" cannot be found"
-       fi
-       if test "x$MPI_INSTALL" != x ; then
--         ERR_MSG+=" under $MPI_INSTALL"
-+         ERR_MSG="$ERR_MSG under $MPI_INSTALL"
-       fi
-       if test "x${enable_fortran}" = xyes ; then
-          dnl --enable-fortran is explicitly set at command line
-@@ -535,7 +535,7 @@
-          ERR_MSG="Specified MPI Fortran 90 compiler \"$ac_user_MPIF90\" cannot be found"
-       fi
-       if test "x$MPI_INSTALL" != x ; then
--         ERR_MSG+=" under $MPI_INSTALL"
-+         ERR_MSG="$ERR_MSG under $MPI_INSTALL"
-       fi
-       if test "x${enable_fortran}" = xyes ; then
-          dnl --enable-fortran is explicitly set at command line
-@@ -682,8 +682,8 @@
- if test "x${has_fortran}" = xyes ; then
-    if test "x${enable_strict}" = xyes -a "x${GFC}" = xyes; then
-       dnl not all Fortran compilers recognize -Wall
--      FFLAGS+=" -Wall"
--      FCFLAGS+=" -Wall"
-+      FFLAGS="$FFLAGS -Wall"
-+      FCFLAGS="$FCFLAGS -Wall"
-    fi
-    dnl AC_SUBST(FLIBS)
-    dnl AC_SUBST(FCLIBS)
-@@ -794,14 +794,14 @@
-    if test "x${ac_cv_fc_compiler_nag}" = xyes ; then
-       dnl Add -mismatch if they are not set by users
-       if ! echo "${FFLAGS}" | ${EGREP} -q -- "-mismatch" ; then
--         FFLAGS+=" -mismatch"
-+         FFLAGS="$FFLAGS -mismatch"
-       fi
-       if ! echo "${FCFLAGS}" | ${EGREP} -q -- "-mismatch" ; then
--         FCFLAGS+=" -mismatch"
-+         FCFLAGS="$FCFLAGS -mismatch"
-       fi
-       dnl Add -DNAGFortran
--       FFLAGS+=" -DNAGFortran"
--      FCFLAGS+=" -DNAGFortran"
-+       FFLAGS="$FFLAGS -DNAGFortran"
-+      FCFLAGS="$FCFLAGS -DNAGFortran"
-    fi
- 
-    dnl check Fortran parameter modifier for 8-byte integer type
-@@ -926,8 +926,8 @@
- dnl fi
- 
- UD_PROG_M4
--M4FLAGS+=" -DPNETCDF"
--M4FFLAGS+=" -DPNETCDF"
-+M4FLAGS="$M4FLAGS -DPNETCDF"
-+M4FFLAGS="$M4FFLAGS -DPNETCDF"
- 
- dnl Check for <stdbool.h> that conforms to C99 requirements
- dnl this is also for using bool type in utf8proc.h/utf8proc.c to support
-@@ -1316,31 +1316,31 @@
-    dnl remove all -O and -fast flags
-    dnl add -O0 to all flags
-    if ! echo "${CFLAGS}" | ${EGREP} -q -- "-g" ; then
--      CFLAGS+=" -g"
-+      CFLAGS="$CFLAGS -g"
-    fi
-    CFLAGS=`echo $CFLAGS | sed 's/-O. *//g' | sed 's/-fast *//g'`
--   CFLAGS+=" -O0"
-+   CFLAGS="$CFLAGS -O0"
- 
-    if test "x${has_mpicxx}" = xyes ; then
-       if ! echo "${CXXFLAGS}" | ${EGREP} -q -- "-g" ; then
--         CXXFLAGS+=" -g"
-+         CXXFLAGS="$CXXFLAGS -g"
-       fi
-       CXXFLAGS=`echo $CXXFLAGS | sed 's/-O. *//g' | sed 's/-fast *//g'`
--      CXXFLAGS+=" -O0"
-+      CXXFLAGS="$CXXFLAGS -O0"
-    fi
- 
-    if test "x${has_fortran}" = xyes ; then
-       if ! echo "${FFLAGS}" | ${EGREP} -q -- "-g" ; then
--         FFLAGS+=" -g"
-+         FFLAGS="$FFLAGS -g"
-       fi
-       if ! echo "${FCFLAGS}" | ${EGREP} -q -- "-g" ; then
--         FCFLAGS+=" -g"
-+         FCFLAGS="$FCFLAGS -g"
-       fi
- 
-        FFLAGS=`echo $FFLAGS  | sed 's/-O. *//g' | sed 's/-fast *//g'`
-       FCFLAGS=`echo $FCFLAGS | sed 's/-O. *//g' | sed 's/-fast *//g'`
--       FFLAGS+=" -O0"
--      FCFLAGS+=" -O0"
-+       FFLAGS="$FFLAGS -O0"
-+      FCFLAGS="$FCFLAGS -O0"
-    fi
- fi
- 
-@@ -1541,7 +1541,7 @@
-    dnl No need to add the include paths used to build NetCDF to CPPFLAGS
-    dnl permanently, as it is not needed to compile PnetCDF codes
-    CPPFLAGS_save=$CPPFLAGS
--   CPPFLAGS+=" $netcdf_cflags"
-+   CPPFLAGS="$CPPFLAGS $netcdf_cflags"
-    dnl AC_CHECK_HEADERS uses CPPFLAGS, not CFLAGS
-    AC_CHECK_HEADERS([hdf5.h], [have_hdf5=yes], [have_hdf5=no])
-    if test "x$have_hdf5" = xyes ; then
-@@ -1734,7 +1734,7 @@
-    dnl set default to "mpiexec -n NP"
-    UD_MPI_PATH_PROGS([TESTMPIRUN], [mpiexec mpirun srun])
-    if test "x${TESTMPIRUN}" != x ; then
--      TESTMPIRUN+=" -n NP"
-+      TESTMPIRUN="$TESTMPIRUN -n NP"
-    fi
- fi
- 
+      ac_MPIF77_VENDOR=`head -c 5 conftest.ver`
+      if test "x${ac_MPIF77_VENDOR}" = xPGF77 ; then
+         ac_cv_mpif77_is_PGF77=yes
