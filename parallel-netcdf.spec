@@ -6,13 +6,13 @@
 Summary:	Parallel netCDF (PnetCDF) library
 Summary(pl.UTF-8):	Biblioteka zrównoleglona netCDF (PnetCDF)
 Name:		parallel-netcdf
-Version:	1.12.0
+Version:	1.12.1
 Release:	1
 License:	BSD-like
 Group:		Libraries
 #Source0Download: http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html
 Source0:	http://cucis.ece.northwestern.edu/projects/PnetCDF/Release/pnetcdf-%{version}.tar.gz
-# Source0-md5:	67ba3266da3c6050ba3dc042d67551d7
+# Source0-md5:	878192db34e436cbdd869fff3c7bf0c9
 Patch0:		%{name}-sh.patch
 URL:		https://trac.mcs.anl.gov/projects/parallel-netcdf
 BuildRequires:	autoconf >= 2.69
@@ -23,6 +23,7 @@ BuildRequires:	libtool >= 2:2.4.2
 # mpicc and co.
 BuildRequires:	mpich-devel
 BuildRequires:	m4
+BuildRequires:	rpmbuild(macros) >= 1.752
 %if %{with apidocs}
 BuildRequires:	doxygen
 BuildRequires:	ghostscript
@@ -77,9 +78,7 @@ Statyczna biblioteka PnetCDF.
 Summary:	API documentation for PnetCDF library
 Summary(pl.UTF-8):	Dokumentacja API biblioteki PnetCDF
 Group:		Documentation
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description apidocs
 API documentation for PnetCDF library.
