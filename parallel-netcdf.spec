@@ -22,6 +22,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.4.2
 # mpicc and co.
 BuildRequires:	mpich-devel
+BuildRequires:	mpich-fortran-devel
 BuildRequires:	m4
 BuildRequires:	rpmbuild(macros) >= 1.752
 %if %{with apidocs}
@@ -54,7 +55,7 @@ Summary:	Header files for PnetCDF library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki PnetCDF
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	mpich-devel
+Requires:	mpich-fortran-devel
 
 %description devel
 Header files for PnetCDF library.
@@ -96,6 +97,11 @@ Dokumentacja API biblioteki PnetCDF.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+%define	gfortran_version	%(gfortran -dumpversion)
+%if "%{_ver_ge '%{gfortran_version}' '10.0'}" == "1"
+FFLAGS="%{rpmcflags} -fallow-argument-mismatch"
+FCFLAGS="%{rpmcflags} -fallow-argument-mismatch"
+%endif
 %configure \
 	%{?with_apidocs:--enable-doxygen} \
 	--disable-silent-rules \
