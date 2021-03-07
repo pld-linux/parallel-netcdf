@@ -79,7 +79,7 @@ Statyczna biblioteka PnetCDF.
 Summary:	API documentation for PnetCDF library
 Summary(pl.UTF-8):	Dokumentacja API biblioteki PnetCDF
 Group:		Documentation
-%{?noarchpackage}
+BuildArch:	noarch
 
 %description apidocs
 API documentation for PnetCDF library.
