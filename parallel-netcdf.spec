@@ -6,13 +6,13 @@
 Summary:	Parallel netCDF (PnetCDF) library
 Summary(pl.UTF-8):	Biblioteka zrównoleglona netCDF (PnetCDF)
 Name:		parallel-netcdf
-Version:	1.12.1
+Version:	1.12.2
 Release:	1
 License:	BSD-like
 Group:		Libraries
 #Source0Download: http://cucis.ece.northwestern.edu/projects/PnetCDF/download.html
 Source0:	http://cucis.ece.northwestern.edu/projects/PnetCDF/Release/pnetcdf-%{version}.tar.gz
-# Source0-md5:	878192db34e436cbdd869fff3c7bf0c9
+# Source0-md5:	1ef495a79af1a286445a3cd6661c2763
 Patch0:		%{name}-sh.patch
 URL:		https://trac.mcs.anl.gov/projects/parallel-netcdf
 BuildRequires:	autoconf >= 2.69
