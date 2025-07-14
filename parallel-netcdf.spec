@@ -89,7 +89,7 @@ Dokumentacja API biblioteki PnetCDF.
 
 %prep
 %setup -q -n pnetcdf-%{version}
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 %{__libtoolize}
